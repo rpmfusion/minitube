@@ -1,0 +1,22 @@
+--- minitube/locale/locale1.pri.orig	2010-07-26 23:39:16.000000000 +0100
++++ minitube/locale/locale.pri	2010-08-10 16:24:22.000000000 +0100
+@@ -13,7 +13,7 @@ TRANSLATIONS += \
+     cs_CZ.ts \
+     uk.ts \
+     he_IL.ts \
+-    lat.ts \
++    lv.ts \
+     hr_HR.ts \
+     es.ts \
+     gl.ts \
+@@ -36,8 +36,8 @@ isEmpty(QMAKE_LRELEASE) {
+ }
+ 
+ updateqm.input = TRANSLATIONS
+-updateqm.output = build/target/locale/${QMAKE_FILE_BASE}.qm
+-updateqm.commands = $$QMAKE_LRELEASE ${QMAKE_FILE_IN} -qm build/target/locale/${QMAKE_FILE_BASE}.qm
++updateqm.output = build/target/locale/minitube_${QMAKE_FILE_BASE}.qm
++updateqm.commands = $$QMAKE_LRELEASE ${QMAKE_FILE_IN} -qm build/target/locale/minitube_${QMAKE_FILE_BASE}.qm
+ updateqm.CONFIG += no_link target_predeps
+ QMAKE_EXTRA_COMPILERS += updateqm
+ 
