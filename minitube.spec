@@ -1,6 +1,6 @@
 Name:           minitube
 Version:        1.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        A YouTube desktop client
 
 Group:          Applications/Multimedia
@@ -126,6 +126,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Sat Aug 21 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.1-8
+- rebuilt
+
 * Sun Aug 15 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.1-7
 - drop minitube-QString.patch
 
