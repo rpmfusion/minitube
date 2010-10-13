@@ -1,6 +1,6 @@
 Name:           minitube
-Version:        1.1
-Release:        7%{?dist}
+Version:        1.2
+Release:        1%{?dist}
 Summary:        A YouTube desktop client
 
 Group:          Applications/Multimedia
@@ -36,8 +36,9 @@ Source0:        http://flavio.tordini.org/files/%{name}/%{name}-%{version}.tar.g
 
 # fixes requirement on bundled qtsingleapplication
 Patch0:         minitube-qtsingleapp.patch
+
 # fix breakage caused by qtsingleapplication-add-api.patch
-#Patch1:         minitube-QString.patch
+# Patch1:         minitube-QString.patch
 # name the lang files
 Patch2:         minitube-lang.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -70,6 +71,7 @@ rm -rf src/qtsingleapplication
 
 # rename latvian language code
 mv locale/lat.ts locale/lv.ts
+
 
 %patch0 -p 1
 
@@ -126,6 +128,13 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Sun Oct 13 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.2-1
+- version 1.2
+- QString patch dropped
+
+* Sat Aug 21 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.1-8
+- rebuilt
+
 * Sun Aug 15 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.1-7
 - drop minitube-QString.patch
 
