@@ -1,14 +1,13 @@
-diff -up minitube/minitube.pro.patch minitube/minitube.pro
---- minitube/minitube.pro.patch	2010-07-27 01:39:16.000000000 +0300
-+++ minitube/minitube.pro	2010-08-09 16:49:46.675766686 +0300
-@@ -10,7 +10,9 @@ TARGET = minitube
+diff -up minitube/minitube.pro.qtsingleapp_patch minitube/minitube.pro
+--- minitube/minitube.pro.qtsingleapp_patch	2010-09-26 10:35:29.540451716 +0300
++++ minitube/minitube.pro	2010-09-25 17:44:04.395373519 +0300
+@@ -10,7 +10,8 @@ TARGET = minitube
  QT += network \
      xml \
      phonon
 -include(src/qtsingleapplication/qtsingleapplication.pri)
-+
++# include(src/qtsingleapplication/qtsingleapplication.pri)
 +CONFIG += qtsingleapplication
-+
- include(src/thlibrary/thlibrary.pri)
  HEADERS += src/MainWindow.h \
      src/SearchView.h \
+     src/MediaView.h \
