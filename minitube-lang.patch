@@ -1,6 +1,6 @@
 diff -up minitube/locale/locale.pri.orig minitube/locale/locale.pri
---- minitube/locale/locale.pri.orig	2010-09-26 10:51:58.346654903 +0300
-+++ minitube/locale/locale.pri	2010-09-26 11:25:00.978607272 +0300
+--- minitube/locale/locale.pri.orig	2010-12-13 19:17:35.038300402 +0200
++++ minitube/locale/locale.pri	2010-12-13 19:40:24.519261834 +0200
 @@ -14,7 +14,7 @@ TRANSLATIONS += \
      cs_CZ.ts \
      uk.ts \
@@ -10,7 +10,16 @@ diff -up minitube/locale/locale.pri.orig minitube/locale/locale.pri
      hr_HR.ts \
      es.ts \
      gl.ts \
-@@ -37,8 +37,8 @@ isEmpty(QMAKE_LRELEASE) {
+@@ -30,7 +30,7 @@ TRANSLATIONS += \
+     fi_FI.ts \
+     bg_BG.ts \
+     zh_CN.ts \
+-    mkd_MKD.ts
++    mk_MK.ts
+ 
+ isEmpty(QMAKE_LRELEASE) {
+     win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
+@@ -38,8 +38,8 @@ isEmpty(QMAKE_LRELEASE) {
  }
  
  updateqm.input = TRANSLATIONS

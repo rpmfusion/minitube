@@ -1,6 +1,6 @@
 Name:           minitube
-Version:        1.2
-Release:        2%{?dist}
+Version:        1.3
+Release:        1%{?dist}
 Summary:        A YouTube desktop client
 
 Group:          Applications/Multimedia
@@ -71,7 +71,8 @@ rm -rf src/qtsingleapplication
 
 # rename latvian language code
 mv locale/lat.ts locale/lv.ts
-
+# rename macedoninan language code
+mv locale/mkd_MKD.ts locale/mk_MK.ts
 
 %patch0 -p 1
 
@@ -128,8 +129,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
-* Sat Oct 23 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.2-2
-- rebuild
+* Mon Dec 13 2010 Magnus Tuominen <magnus.tuominen@gmai.com> - 1.3-1
+- version 1.3
+- rename macedonian language code to mk_MK.ts
 
 * Sun Oct 13 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.2-1
 - version 1.2
