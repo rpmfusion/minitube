@@ -1,5 +1,5 @@
 Name:           minitube
-Version:        1.3
+Version:        1.4
 Release:        1%{?dist}
 Summary:        A YouTube desktop client
 
@@ -118,6 +118,7 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/512x512/apps/%{name}.png
+%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 %{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
@@ -129,6 +130,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Fri Feb 11 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.4-1
+- version bump
+
 * Mon Dec 13 2010 Magnus Tuominen <magnus.tuominen@gmai.com> - 1.3-1
 - version 1.3
 - rename macedonian language code to mk_MK.ts
