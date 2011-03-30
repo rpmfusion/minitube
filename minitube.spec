@@ -1,12 +1,11 @@
 Name:           minitube
-Version:        1.4
+Version:        1.4.1
 Release:        1%{?dist}
 Summary:        A YouTube desktop client
 
 Group:          Applications/Multimedia
-
 # License info:
-###
+#
 # LGPLv2.1 with exceptions or GPLv3:
 # src/iconloader/qticonloader.h
 # src/iconloader/qticonloader.cpp
@@ -14,33 +13,28 @@ Group:          Applications/Multimedia
 # src/searchlineedit.cpp
 #
 # LGPLv2 with exceptions or GPLv3:
-# src/urllineedit.h 
+# src/urllineedit.h
 # src/urllineedit.cpp
 #
 # GPLv2 or GPLv3:
-# src/flickcharm.cpp 
+# src/flickcharm.cpp
 # src/flickcharm.h
 #
 # LGPLv2.1:
-# src/minisplitter.h 
+# src/minisplitter.h
 # src/minisplitter.cpp
 #
 # All other files are GPLv3+ as per INSTALL file
-###
+#
 # End Of License info.
-
 # The source files combined together into minitube binary are GPLv3, and the .qm files are GPLv3+
+
 License:        GPLv3 and GPLv3+
 URL:            http://flavio.tordini.org/minitube
 Source0:        http://flavio.tordini.org/files/%{name}/%{name}-%{version}.tar.gz
-
 # fixes requirement on bundled qtsingleapplication
 Patch0:         minitube-qtsingleapp.patch
-
-# fix breakage caused by qtsingleapplication-add-api.patch
-# Patch1:         minitube-QString.patch
-# name the lang files
-Patch2:         minitube-lang.patch
+Patch1:         minitube-1.4.1-lang.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %{?_qt4_version:Requires: qt4 >= %{_qt4_version}}
@@ -50,8 +44,14 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  phonon-devel
 BuildRequires:  qtsingleapplication-devel
 Requires:       hicolor-icon-theme
-Requires:       xine-lib-extras-freeworld
 
+# KDE 4.6.1 in fedora 15 defaults to phonon-backend-gstreamer
+# add gstreamer-ffmpeg as Required.
+%if 0%{?fedora} && 0%{?fedora} > 14
+Requires:       gstreamer-ffmpeg
+%else
+Requires:       xine-lib-extras-freeworld
+%endif
 
 %description
 Minitube is a YouTube desktop client.
@@ -69,16 +69,9 @@ chmod -x src/*{h,cpp}
 # remove bundled copy of qtsingleapplication
 rm -rf src/qtsingleapplication
 
-# rename latvian language code
-mv locale/lat.ts locale/lv.ts
-# rename macedoninan language code
-mv locale/mkd_MKD.ts locale/mk_MK.ts
-
 %patch0 -p 1
 
-#%%patch1 -p 0
-
-%patch2 -p1 -b .lang
+%patch1 -p1 -b .orig
 
 %build
 %{_qt4_qmake} PREFIX=%{_prefix}
@@ -93,8 +86,6 @@ desktop-file-install \
   --delete-original \
         %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-
-# find_lang magic:
 %find_lang %{name} --all-name --with-qt
 
 %clean
@@ -130,6 +121,12 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Wed Mar 30 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.4.1-1
+- version bump
+- new lang patch
+- cleaned spec of comments and old patches
+- update Requires to match f-15 gstreamer defaults
+
 * Fri Feb 11 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.4-1
 - version bump
 
