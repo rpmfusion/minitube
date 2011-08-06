@@ -1,5 +1,5 @@
 Name:           minitube
-Version:        1.4.3
+Version:        1.5
 Release:        1%{?dist}
 Summary:        A YouTube desktop client
 
@@ -121,6 +121,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Sat Aug 06 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.5-1
+- 1.5 to the rescue
+
 * Thu May 19 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.4.3-1
 - version bump
 
