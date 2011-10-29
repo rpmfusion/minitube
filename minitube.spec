@@ -1,6 +1,6 @@
 Name:           minitube
-Version:        1.5
-Release:        1%{?dist}
+Version:        1.6
+Release:        2%{?dist}
 Summary:        A YouTube desktop client
 
 Group:          Applications/Multimedia
@@ -31,7 +31,7 @@ Group:          Applications/Multimedia
 
 License:        GPLv3 and GPLv3+
 URL:            http://flavio.tordini.org/minitube
-Source0:        http://flavio.tordini.org/files/%{name}/%{name}-%{version}.tar.gz
+Source0:        http://flavio.tordini.org/files/%{name}/%{name}.tar.gz
 # fixes requirement on bundled qtsingleapplication
 Patch0:         minitube-qtsingleapp.patch
 Patch1:         minitube-1.4.1-lang.patch
@@ -121,6 +121,12 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Sat Oct 29 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.6-2
+- fixed source url
+
+* Sat Oct 29 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.6-1
+- 1.6
+
 * Sat Aug 06 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.5-1
 - 1.5 to the rescue
 
