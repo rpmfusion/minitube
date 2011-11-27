@@ -1,6 +1,6 @@
 Name:           minitube
 Version:        1.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A YouTube desktop client
 
 Group:          Applications/Multimedia
@@ -34,7 +34,6 @@ URL:            http://flavio.tordini.org/minitube
 Source0:        http://flavio.tordini.org/files/%{name}/%{name}.tar.gz
 # fixes requirement on bundled qtsingleapplication
 Patch0:         minitube-qtsingleapp.patch
-Patch1:         minitube-1.4.1-lang.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %{?_qt4_version:Requires: qt4 >= %{_qt4_version}}
@@ -43,6 +42,7 @@ BuildRequires:  qt4-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  phonon-devel
 BuildRequires:  qtsingleapplication-devel
+BuildRequires:  gettext
 Requires:       hicolor-icon-theme
 
 # KDE 4.6.1 in fedora 15 defaults to phonon-backend-gstreamer
@@ -71,11 +71,12 @@ rm -rf src/qtsingleapplication
 
 %patch0 -p 1
 
-%patch1 -p1 -b .orig
-
 %build
+
 %{_qt4_qmake} PREFIX=%{_prefix}
 make %{?_smp_mflags}
+
+
 
 %install
 rm -rf %{buildroot}
@@ -86,7 +87,13 @@ desktop-file-install \
   --delete-original \
         %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-%find_lang %{name} --all-name --with-qt
+# There is a bug in find-lang.sh (see BZ #729336)
+# heavily borrowed from /usr/lib/rpm/find-lang.sh
+find %{buildroot} -type f -o -type l|sort|sed '
+s:'"%{buildroot}"'::
+s:\(.*/locale/\)\([^/_]\+\)\(.*\.qm$\):%lang(\2) \1\2\3:
+s:^\([^%].*\)::
+/^$/d' > %{name}.lang
 
 %clean
 rm -rf %{buildroot}
@@ -108,19 +115,17 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %doc AUTHORS COPYING LICENSE.LGPL CHANGES TODO INSTALL
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/512x512/apps/%{name}.png
-%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
-%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
-%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
-%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
-%{_datadir}/icons/hicolor/22x22/apps/%{name}.png
-%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/locale
+
 
 %changelog
+* Sun Nov 27 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.6-3
+- clean spec file
+- make translations work
+- special thanks to killefiz @ #fedora-kde
+- remove uneccesary patches
+
 * Sat Oct 29 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.6-2
 - fixed source url
 
