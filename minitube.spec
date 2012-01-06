@@ -1,9 +1,9 @@
 Name:           minitube
-Version:        1.6
-Release:        3%{?dist}
+Version:        1.7
+Release:        1%{?dist}
 Summary:        A YouTube desktop client
-
 Group:          Applications/Multimedia
+
 # License info:
 #
 # LGPLv2.1 with exceptions or GPLv3:
@@ -34,8 +34,9 @@ URL:            http://flavio.tordini.org/minitube
 Source0:        http://flavio.tordini.org/files/%{name}/%{name}.tar.gz
 # fixes requirement on bundled qtsingleapplication
 Patch0:         minitube-qtsingleapp.patch
+Patch1:         minitube-1.7-translation.patch
+Patch2:         minitube-1.7-updateCheckRemoval.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
 %{?_qt4_version:Requires: qt4 >= %{_qt4_version}}
 
 BuildRequires:  qt4-devel
@@ -68,15 +69,27 @@ chmod -x src/*{h,cpp}
 
 # remove bundled copy of qtsingleapplication
 rm -rf src/qtsingleapplication
-
+# rename badly named translation files
+mv locale/sv_SE.ts locale/sv.ts
+mv locale/en_US.ts locale/en.ts
+mv locale/de_DE.ts locale/de.ts
+mv locale/fi_FI.ts locale/fi.ts
+mv locale/he_IL.ts locale/he.ts
+mv locale/ka_GE.ts locale/ka.ts
+mv locale/uk_UA.ts locale/uk.ts
+mv locale/zh_CN.ts locale/zh-temp.ts
+# we want that one^..
+# removing the rest
+rm -rf locale/*_*.ts
+mv locale/zh-temp.ts locale/zh_CN.ts
 %patch0 -p 1
+%patch1 -p 0
+%patch2 -p 0
 
 %build
 
 %{_qt4_qmake} PREFIX=%{_prefix}
 make %{?_smp_mflags}
-
-
 
 %install
 rm -rf %{buildroot}
@@ -118,8 +131,15 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
-
 %changelog
+* Fri Jan 06 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.7-1
+- 1.7
+- new translation patch
+- remove updatechecking bits
+
+* Sat Dec 17 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.6-4
+- more translation fixes
+
 * Sun Nov 27 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.6-3
 - clean spec file
 - make translations work

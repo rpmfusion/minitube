@@ -1,0 +1,87 @@
+diff -up src/MainWindow.cpp.orig src/MainWindow.cpp
+--- src/MainWindow.cpp.orig	2012-01-05 13:53:47.000000000 +0200
++++ src/MainWindow.cpp	2012-01-06 21:05:19.164971931 +0200
+@@ -20,7 +20,7 @@
+ #endif
+ #include "downloadmanager.h"
+ #include "youtubesuggest.h"
+-#include "updatechecker.h"
++
+ #ifdef APP_DEMO
+ #include "demostartupview.h"
+ #endif
+@@ -43,9 +43,9 @@ MainWindow::MainWindow() :
+         downloadView(0),
+         mediaObject(0),
+         audioOutput(0),
+-        m_fullscreen(false),
+-        updateChecker(0) {
++        m_fullscreen(false)
+ 
++{
+     singleton = this;
+ 
+     // views mechanism
+@@ -1252,32 +1252,7 @@ void MainWindow::dropEvent(QDropEvent *e
+     }
+ }
+ 
+-void MainWindow::checkForUpdate() {
+-    static const QString updateCheckKey = "updateCheck";
+-
+-    // check every 24h
+-    QSettings settings;
+-    uint unixTime = QDateTime::currentDateTime().toTime_t();
+-    int lastCheck = settings.value(updateCheckKey).toInt();
+-    int secondsSinceLastCheck = unixTime - lastCheck;
+-    // qDebug() << "secondsSinceLastCheck" << unixTime << lastCheck << secondsSinceLastCheck;
+-    if (secondsSinceLastCheck < 86400) return;
+-
+-    // check it out
+-    if (updateChecker) delete updateChecker;
+-    updateChecker = new UpdateChecker();
+-    connect(updateChecker, SIGNAL(newVersion(QString)),
+-            this, SLOT(gotNewVersion(QString)));
+-    updateChecker->checkForUpdate();
+-    settings.setValue(updateCheckKey, unixTime);
+-
+-}
+-
+ void MainWindow::gotNewVersion(QString version) {
+-    if (updateChecker) {
+-        delete updateChecker;
+-        updateChecker = 0;
+-    }
+ 
+ #if defined(APP_DEMO) || defined(APP_MAC_STORE)
+     return;
+diff -up src/MainWindow.h.orig src/MainWindow.h
+--- src/MainWindow.h.orig	2012-01-05 13:53:47.000000000 +0200
++++ src/MainWindow.h	2012-01-06 20:59:43.832461064 +0200
+@@ -13,7 +13,7 @@
+ #include "downloadview.h"
+ 
+ class SearchLineEdit;
+-class UpdateChecker;
++
+ 
+ class MainWindow : public QMainWindow {
+ 
+@@ -40,7 +40,7 @@ protected:
+     void resizeEvent(QResizeEvent *);
+ 
+ private slots:
+-    void checkForUpdate();
++
+     void gotNewVersion(QString version);
+     void goBack();
+     void showSearch();
+@@ -91,7 +91,7 @@ private:
+     static QString formatTime(qint64 time);
+     bool confirmQuit();
+ 
+-    UpdateChecker *updateChecker;
++
+ 
+     // view mechanism
+     QStackedWidget *views;
