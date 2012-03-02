@@ -1,6 +1,6 @@
 Name:           minitube
 Version:        1.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A YouTube desktop client
 Group:          Applications/Multimedia
 
@@ -132,6 +132,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 %changelog
+* Fri Mar 02 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.7-2
+- Rebuilt for c++ ABI breakage
+
 * Fri Jan 06 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.7-1
 - 1.7
 - new translation patch
