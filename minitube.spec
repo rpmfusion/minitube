@@ -1,6 +1,6 @@
 Name:           minitube
-Version:        1.7
-Release:        2%{?dist}
+Version:        1.8.0
+Release:        1%{?dist}
 Summary:        A YouTube desktop client
 Group:          Applications/Multimedia
 
@@ -34,10 +34,7 @@ URL:            http://flavio.tordini.org/minitube
 Source0:        http://flavio.tordini.org/files/%{name}/%{name}.tar.gz
 # fixes requirement on bundled qtsingleapplication
 Patch0:         minitube-qtsingleapp.patch
-Patch1:         minitube-1.7-translation.patch
-Patch2:         minitube-1.7-updateCheckRemoval.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-%{?_qt4_version:Requires: qt4 >= %{_qt4_version}}
+Patch1:         minitube-1.8-1-disable-update-check.patch
 
 BuildRequires:  qt4-devel
 BuildRequires:  desktop-file-utils
@@ -45,15 +42,9 @@ BuildRequires:  phonon-devel
 BuildRequires:  qtsingleapplication-devel
 BuildRequires:  gettext
 Requires:       hicolor-icon-theme
-
-# KDE 4.6.1 in fedora 15 defaults to phonon-backend-gstreamer
-# add gstreamer-ffmpeg as Required.
-%if 0%{?fedora} && 0%{?fedora} > 14
 Requires:       gstreamer-ffmpeg
-%else
-Requires:       xine-lib-extras-freeworld
-%endif
 
+%{?_qt4_version:Requires: qt4 >= %{_qt4_version}}
 %description
 Minitube is a YouTube desktop client.
 With it you can watch YouTube videos in a new way:
@@ -64,27 +55,11 @@ it aims to create a new TV-like experience.
 %prep
 %setup -q -n %{name}
 
-# Fix spurious-executable-perm
-chmod -x src/*{h,cpp}
-
 # remove bundled copy of qtsingleapplication
 rm -rf src/qtsingleapplication
-# rename badly named translation files
-mv locale/sv_SE.ts locale/sv.ts
-mv locale/en_US.ts locale/en.ts
-mv locale/de_DE.ts locale/de.ts
-mv locale/fi_FI.ts locale/fi.ts
-mv locale/he_IL.ts locale/he.ts
-mv locale/ka_GE.ts locale/ka.ts
-mv locale/uk_UA.ts locale/uk.ts
-mv locale/zh_CN.ts locale/zh-temp.ts
-# we want that one^..
-# removing the rest
-rm -rf locale/*_*.ts
-mv locale/zh-temp.ts locale/zh_CN.ts
+
 %patch0 -p 1
 %patch1 -p 0
-%patch2 -p 0
 
 %build
 
@@ -100,16 +75,14 @@ desktop-file-install \
   --delete-original \
         %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-# There is a bug in find-lang.sh (see BZ #729336)
-# heavily borrowed from /usr/lib/rpm/find-lang.sh
-find %{buildroot} -type f -o -type l|sort|sed '
-s:'"%{buildroot}"'::
-s:\(.*/locale/\)\([^/_]\+\)\(.*\.qm$\):%lang(\2) \1\2\3:
-s:^\([^%].*\)::
+# %%find_lang 
+# There is a bug in find-lang.sh (see BZ #729336)                                    
+# heavily borrowed from /usr/lib/rpm/find-lang.sh                                    
+find %{buildroot} -type f -o -type l|sort|sed '                                      
+s:'"%{buildroot}"'::                                                                 
+s:\(.*/locale/\)\([^/_]\+\)\(.*\.qm$\):%lang(\2) \1\2\3:                             
+s:^\([^%].*\)::                                                                      
 /^$/d' > %{name}.lang
-
-%clean
-rm -rf %{buildroot}
 
 %post
 touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -124,14 +97,26 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files -f %{name}.lang
-%defattr(-,root,root,-)
-%doc AUTHORS COPYING LICENSE.LGPL CHANGES TODO INSTALL
+%doc AUTHORS COPYING LICENSE.LGPL CHANGES TODO
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+%dir %{_datadir}/%{name}/
+%dir %{_datadir}/%{name}/locale
 
 %changelog
+* Fri Aug 24 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.8.0-1
+- 1.8.0
+- clean spec file
+- disable-update-patch borrowed from debian
+
+* Fri Apr 12 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.7.1-1
+- 1.7.1
+- removed INSTALL
+- own dir
+- removed legacy stuff from spec
+
 * Fri Mar 02 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.7-2
 - Rebuilt for c++ ABI breakage
 
