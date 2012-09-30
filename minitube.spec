@@ -1,5 +1,5 @@
 Name:           minitube
-Version:        1.8.0
+Version:        1.9.0
 Release:        1%{?dist}
 Summary:        A YouTube desktop client
 Group:          Applications/Multimedia
@@ -34,7 +34,7 @@ URL:            http://flavio.tordini.org/minitube
 Source0:        http://flavio.tordini.org/files/%{name}/%{name}.tar.gz
 # fixes requirement on bundled qtsingleapplication
 Patch0:         minitube-qtsingleapp.patch
-Patch1:         minitube-1.8-1-disable-update-check.patch
+Patch1:         minitube-1.9.0-1-disable-update-check.patch
 
 BuildRequires:  qt4-devel
 BuildRequires:  desktop-file-utils
@@ -106,6 +106,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Sun Sep 30 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.9.0-1
+- update to 1.9.0-1
+
 * Fri Aug 24 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.8.0-1
 - 1.8.0
 - clean spec file
