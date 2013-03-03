@@ -1,6 +1,6 @@
 Name:           minitube
 Version:        1.9.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A YouTube desktop client
 Group:          Applications/Multimedia
 
@@ -106,6 +106,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Sun Mar 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.9.0-2
+- Mass rebuilt for Fedora 19 Features
+
 * Sun Sep 30 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.9.0-1
 - update to 1.9.0-1
 
