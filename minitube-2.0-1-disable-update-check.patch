@@ -1,0 +1,12 @@
+diff -up src/mainwindow.cpp.orig src/mainwindow.cpp
+--- src/mainwindow.cpp.orig	2013-02-06 17:18:03.905070590 +0200
++++ src/mainwindow.cpp	2013-02-06 17:19:14.886417012 +0200
+@@ -146,7 +146,7 @@ MainWindow::MainWindow() :
+     mouseTimer->setSingleShot(true);
+     connect(mouseTimer, SIGNAL(timeout()), SLOT(hideMouse()));
+ 
+-    QTimer::singleShot(0, this, SLOT(checkForUpdate()));
++    //QTimer::singleShot(0, this, SLOT(checkForUpdate()));
+ 
+ }
+ 
