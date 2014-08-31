@@ -1,6 +1,6 @@
 Name:           minitube
 Version:        2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A YouTube desktop client
 Group:          Applications/Multimedia
 
@@ -107,6 +107,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Sun Aug 31 2014 Sérgio Basto <sergio@serjux.com> - 2.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Wed Feb 06 2013 Magnus Tuominen <magnus.tuominen@gmail.com> - 2.0-1
 - 2.0
 - update patches
