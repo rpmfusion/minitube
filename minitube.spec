@@ -1,6 +1,6 @@
 Name:           minitube
-Version:        2.0
-Release:        2%{?dist}
+Version:        2.3
+Release:        1%{?dist}
 Summary:        A YouTube desktop client
 Group:          Applications/Multimedia
 
@@ -35,7 +35,8 @@ Source0:        http://flavio.tordini.org/files/%{name}/%{name}.tar.gz
 # fixes requirement on bundled qtsingleapplication
 #Patch0:         minitube-qtsingleapp.patch
 #Patch1:         minitube-2.0-1-disable-update-check.patch
-Patch0:         minitube-2.0-1_disable-update_qtsingleapp.patch
+#Patch0:         minitube-2.0-1_disable-update_qtsingleapp.patch
+Patch3:		minitube-2.3-1_qtsingleapp.patch
 
 BuildRequires:  qt4-devel
 BuildRequires:  desktop-file-utils
@@ -59,8 +60,9 @@ it aims to create a new TV-like experience.
 # remove bundled copy of qtsingleapplication
 rm -rf src/qtsingleapplication
 
-%patch0 -p 1
+#%%patch0 -p 1
 #%%patch1 -p 0
+%patch3 -p 1
 
 %build
 
@@ -98,7 +100,7 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files -f %{name}.lang
-%doc AUTHORS COPYING LICENSE.LGPL CHANGES TODO
+%doc AUTHORS COPYING CHANGES TODO
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
@@ -107,6 +109,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %dir %{_datadir}/%{name}/locale
 
 %changelog
+* Sat Jan 17 2015 Magnus Tuominen <magnus.tuominen@gmail.com> -2.3-1
+- 2.3
+
 * Sun Aug 31 2014 Sérgio Basto <sergio@serjux.com> - 2.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
@@ -122,7 +127,7 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 - clean spec file
 - disable-update-patch borrowed from debian
 
-* Fri Apr 12 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.7.1-1
+* Thu Apr 12 2012 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.7.1-1
 - 1.7.1
 - removed INSTALL
 - own dir
@@ -169,11 +174,11 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 * Fri Feb 11 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.4-1
 - version bump
 
-* Mon Dec 13 2010 Magnus Tuominen <magnus.tuominen@gmai.com> - 1.3-1
+* Wed Dec 13 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.3-1
 - version 1.3
 - rename macedonian language code to mk_MK.ts
 
-* Sun Oct 13 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.2-1
+* Wed Oct 13 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.2-1
 - version 1.2
 - QString patch dropped
 

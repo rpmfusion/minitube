@@ -1,0 +1,15 @@
+diff --git a/minitube.pro b/minitube.pro.orig
+index effa02e..2d5edde 100644
+--- a/minitube.pro
++++ b/minitube.pro.orig
+@@ -24,8 +24,8 @@ qt:greaterThan(QT_MAJOR_VERSION, 4) {
+     contains(QT, gui): QT *= widgets
+ }
+ 
+-include(src/qtsingleapplication/qtsingleapplication.pri)
+-
++# include(src/qtsingleapplication/qtsingleapplication.pri)
++CONFIG += qtsingleapplication
+ HEADERS += src/video.h \
+     src/searchlineedit.h \
+     src/urllineedit.h \
