@@ -43,6 +43,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  phonon-devel
 BuildRequires:  qtsingleapplication-devel
 BuildRequires:  gettext
+BuildRequires:	gcc-c++
 Requires:       hicolor-icon-theme
 Requires:       gstreamer-ffmpeg
 
@@ -174,7 +175,7 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 * Fri Feb 11 2011 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.4-1
 - version bump
 
-* Wed Dec 13 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.3-1
+* Mon Dec 13 2010 Magnus Tuominen <magnus.tuominen@gmail.com> - 1.3-1
 - version 1.3
 - rename macedonian language code to mk_MK.ts
 
